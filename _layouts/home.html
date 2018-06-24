@@ -3,18 +3,30 @@ layout: default
 ---
 
 <div>
-    <div class="photos">
+    <header class="header">
+        <img class="header__logo" src="{{ 'assets/img/logo_en.png' | relative_url }}">
+
+        <div class="header__menu-button">
+            <button class="hamburger hamburger--collapse" type="button">
+              <span class="hamburger-box">
+                <span class="hamburger-inner"></span>
+              </span>
+            </button>
+        </div>
+    </header>
+
+    <section class="photos">
         {% for section in site.data.photos %}
         <div class="photos__section">
             {% for photoName in section %}
             <div class="photos__slide">
                 <div class="photos__image-wrapper">
-                    <img data-src="{{ photoName | prepend: 'assets/photos/' | relative_url }}"
+                    <img data-src="{{ photoName | prepend: 'assets/img/photos/' | relative_url }}"
                          class="photos__image"/>
                 </div>
             </div>
             {% endfor %}
         </div>
         {% endfor %}
-    </div>
+    </section>
 </div>
