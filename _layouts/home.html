@@ -1,0 +1,11 @@
+---
+layout: default
+---
+
+<div>
+    {% for photosSection in site.data.photos %}
+    {% for photoName in photosSection %}
+    <img src="{{ photoName | prepend: 'assets/photos/' | relative_url }}"/>
+    {% endfor %}
+    {% endfor %}
+</div>
