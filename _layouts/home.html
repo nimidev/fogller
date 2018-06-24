@@ -3,9 +3,16 @@ layout: default
 ---
 
 <div>
-    {% for photosSection in site.data.photos %}
-    {% for photoName in photosSection %}
-    <img src="{{ photoName | prepend: "assets/photos/" | relative_url }}"/>
-    {% endfor %}
-    {% endfor %}
+    <div id="fullpage">
+        {% for section in site.data.photos %}
+        <div class="section">
+            {% for photoName in section %}
+            <div class="slide">
+                <img data-src="{{ photoName | prepend: 'assets/photos/' | relative_url }}"
+                     class="fullpage-photo"/>
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
 </div>
