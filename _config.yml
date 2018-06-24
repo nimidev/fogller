@@ -13,15 +13,27 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: Your awesome title
-email: your-email@example.com
-description: >- # this means to ignore newlines until "baseurl:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
-twitter_username: jekyllrb
-github_username:  jekyll
-
+title: Fogller
+fullName:
+  en: Fogller Holdings
+  iw: פוגלר החזקות
+address:
+  en: Hasadnaot 4, Herzliya
+  iw: הסדנאות 4, הרצליה
+email: office@fogller.com
+phone: 09-9599016
+description:
+  en: >- # this means to ignore newlines until new property
+    We strive to see beyond the actual planning to provide our customers with a high quality of life for many years.<br><br>
+    This strategy is reflected in each and every one of our projects, and it is displayed in the detailed design and extra high standards, whether it is a building for conversation or an entire urban neighbourhood.
+  iw: >-
+    את ההקפדה על הפרטים והעיצוב ניתן לראות בכל יוזמה של פוגלר החזקות בין אם זה בניין בוטיק או רובע עירוני שלם.
+    השאיפה להוביל דרך סטנדרטים גבוהים היא בבסיס התפיסה המקצועית של חברה
+    <br><br>
+    אסטרטגיית החברה ברורה בכל היבט ושואפת להביט מעבר לתכניות מתוך רצון ליצור איכות חיים גבוהה לאורך שנים רבות.
+index:
+  iw:
+  en: index_en.html
 # Build settings
 markdown: kramdown
 theme: minima

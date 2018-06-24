@@ -3,8 +3,11 @@
 
 @charset "utf-8";
 
-$main-color: orangered;
+$main-color: #FF481C;
 $hamburger-layer-color: $main-color;
+$hamburger-layer-height: 2px;
+$hamburger-layer-width: 30px;
+$hamburger-hover-opacity: 1;
 
 @import "hamburgers/hamburgers";
 
@@ -14,6 +17,87 @@ $hamburger-layer-color: $main-color;
 
 $initial-animation-time: 0.5s;
 $photos-margin: 72px;
+
+html {
+  font-variant-ligatures: none;
+  -webkit-font-variant-ligatures: none;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased;
+}
+
+html[lang="en"] {
+  font-family: 'Merriweather', serif;
+}
+
+html[lang="iw"] {
+  font-family: 'Tinos', serif;
+}
+
+body {
+  position: relative;
+
+  &:before,
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: block;
+    transition: all $initial-animation-time;
+  }
+
+  &:before {
+    background: #fff;
+    opacity: 0;
+  }
+
+  &.is-info-open {
+    &:before {
+      opacity: 0.5;
+      z-index: 10;
+      cursor: pointer;
+    }
+  }
+
+  &:after {
+    border: 0 solid #fff;
+  }
+
+  &.header-visible {
+    &:after {
+      border-width: $photos-margin;
+    }
+  }
+}
+
+%reset-button {
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  overflow: visible;
+
+  background: transparent;
+  outline: none;
+
+  /* inherit font & color from ancestor */
+  color: inherit;
+  font: inherit;
+
+  /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
+  line-height: normal;
+
+  /* Corrects font smoothing for webkit */
+  -webkit-font-smoothing: inherit;
+  -moz-osx-font-smoothing: inherit;
+
+  /* Corrects inability to style clickable `input` types in iOS */
+  -webkit-appearance: none;
+}
 
 .photos {
   &__slide {
@@ -29,31 +113,19 @@ $photos-margin: 72px;
     right: 0;
     bottom: 0;
     transition: all $initial-animation-time ease-in-out;
-  }
 
-  &__image {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
-
-  &_with-menu {
-    .photos__image-wrapper {
+    .header-visible & {
       top: $photos-margin;
       left: $photos-margin;
       right: $photos-margin;
       bottom: $photos-margin;
     }
   }
-}
 
-.fp-controlArrow {
-  &.fp-prev {
-    border-right-color: $main-color;
-  }
-
-  &.fp-next {
-    border-left-color: $main-color;
+  &__image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
   }
 }
 
@@ -62,29 +134,165 @@ $photos-margin: 72px;
   padding: 0 $photos-margin;
   height: $photos-margin;
   width: 100%;
-  z-index: 1;
+  z-index: 20;
   opacity: 0;
   transition: opacity $initial-animation-time;
   justify-content: space-between;
   align-items: center;
   display: flex;
-  background-color: #fff;
 
-  &_visible {
+  &:not(.header-visible & ) {
+    pointer-events: none;
+  }
+
+  .header-visible & {
     opacity: 1;
   }
 
   &__logo {
-    width: 170px;
-    margin-left: -52px;
+    margin-left: -50px;
   }
 
   &__menu-button {
     margin-right: -$hamburger-padding-x;
 
     .hamburger {
-      outline: none;
+      padding: $hamburger-padding-x;
+      @extend %reset-button;
+    }
+
+  }
+}
+
+.info {
+  $height: 300px;
+  height: $height;
+  position: fixed;
+  left: $photos-margin;
+  right: $photos-margin;
+  top: -300px;
+  transition: top 0.5s;
+  z-index: 15;
+  background-color: #fff;
+  justify-content: space-between;
+  display: flex;
+  font-weight: 300;
+  padding: 50px 20px;
+  line-height: 1.8;
+
+  .is-info-open & {
+    top: 0;
+  }
+
+  &__left {
+    width: 50%;
+  }
+
+  &__right {
+    width: 30%;
+  }
+
+  &__title {
+    font-weight: 300;
+    color: $main-color;
+    margin: 20px 0 35px;
+  }
+
+  &__address,
+  &__email,
+  &__phone {
+    display: block;
+    line-height: 2;
+  }
+
+  &__email,
+  &__phone {
+    color: #000;
+    text-decoration: none;
+    transition: opacity .3s;
+
+    &:hover {
+      opacity: 0.5;
     }
   }
 }
 
+.title {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 900;
+  font-size: 80px;
+  letter-spacing: 3px;
+  padding-top: 15%;
+  padding-left: 5%;
+  transition: opacity $initial-animation-time;
+
+  .header-visible & {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+.arrow {
+  position: fixed;
+  @extend %reset-button;
+  z-index: 5;
+  margin: auto;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity .5s;
+
+  svg {
+    fill: $main-color;
+  }
+
+  &_visible {
+    opacity: 1;
+  }
+
+  &:not(.arrow_visible) {
+    pointer-events: none;
+  }
+
+  &_left,
+  &_right {
+    top: 0;
+    bottom: 0;
+    height: 20px;
+    width: 40px;
+
+    svg {
+      width: 40px;
+      height: 20px;
+    }
+  }
+
+  &_left {
+    left: 50px;
+  }
+
+  &_right {
+    right: 50px;
+  }
+
+  &_down {
+    width: 20px;
+    height: 50px;
+    right: 0;
+    left: 0;
+    bottom: 5px;
+
+    svg {
+      width: 20px;
+      height: 40px;
+    }
+  }
+}

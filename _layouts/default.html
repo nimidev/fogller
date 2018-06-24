@@ -8,22 +8,25 @@
 
     <title>{% if page.title %}{{ page.title | escape }}{% else %}{{ site.title | escape }}{% endif %}</title>
     <meta name="description"
-          content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}">
+          content="{{  site.description[page.lang] | strip_html | normalize_whitespace | truncate: 160 | escape }}">
 
+    <link href="https://fonts.googleapis.com/css?family={% if page.lang == 'en' %}{{ 'Merriweather:300,400,700,900' }}{% else %}{{ 'Tinos:400,700&amp;subset=hebrew' }}{% endif %}"
+          rel="stylesheet">
     <!--<link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">-->
 
+    <!-- FullPage start -->
     <link rel="stylesheet"
           type="text/css"
           href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.9.7/jquery.fullpage.min.css"
     />
-
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-
     <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.9.7/jquery.fullpage.min.js">
     </script>
+    <!-- FullPage end-->
 
     <link rel="stylesheet" href="{{ '/assets/main.css' | relative_url }}">
+
 
     <!--
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicons/apple-touch-icon.png">
@@ -41,8 +44,53 @@
 </head>
 
 <body>
+<header class="header">
+    <div class="header__logo">
+        {% include logo.html %}
+    </div>
 
-{{ content }}
+    <div class="header__menu-button">
+        <button class="hamburger hamburger--collapse" type="button">
+              <span class="hamburger-box">
+                <span class="hamburger-inner"></span>
+              </span>
+        </button>
+    </div>
+</header>
+
+<section class="info">
+    <div class="info__left">
+        <p class="info__description">{{ site.description[page.lang] }}</p>
+    </div>
+
+    <div class="info__right">
+        <h1 class="info__title">{{ site.fullName[page.lang] }}</h1>
+        <span class="info__address">{{ site.address[page.lang] }}</span>
+        <a href="mailto:{{site.email}}" class="info__email">{{ site.email }}</a>
+        <a href="tel:{{site.phone}}" class="info__phone">{{ site.phone }}</a>
+    </div>
+</section>
+
+<div class="photos">
+    {% for section in site.data.photos %}
+    <div class="photos__section">
+        {% for photoName in section %}
+        <div class="photos__slide">
+            <div class="photos__image-wrapper">
+                <img data-src="{{ photoName | prepend: 'assets/img/photos/' | relative_url }}"
+                     class="photos__image"/>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+</div>
+
+<h1 class="title">{{ site.title }}</h1>
+
+<button type="button" class="arrow arrow_left">{% include arrow-left.svg %}</button>
+<button type="button" class="arrow arrow_right">{% include arrow-right.svg %}</button>
+<button type="button" class="arrow arrow_down arrow_visible">{% include arrow-down.svg %}</button>
 
 </body>
 
