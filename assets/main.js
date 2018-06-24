@@ -35,6 +35,7 @@ $(document).ready(function () {
 
     if ($target.closest($hamburger).length === 0 && $target.closest($info).length === 0) {
       $body.removeClass('is-info-open');
+      $hamburger.removeClass('is-active');
     }
   });
 });
