@@ -21,7 +21,9 @@ address:
   en: Hasadnaot 4, Herzliya
   iw: הסדנאות 4, הרצליה
 email: office@fogller.com
-phone: 09-9599016
+phone:
+  en: +972 09-9599016
+  iw: 09-9599016
 description:
   en: >- # this means to ignore newlines until new property
     We strive to see beyond the actual planning to provide our customers with a high quality of life for many years.<br><br>
@@ -31,12 +33,52 @@ description:
     השאיפה להוביל דרך סטנדרטים גבוהים היא בבסיס התפיסה המקצועית של חברה
     <br><br>
     אסטרטגיית החברה ברורה בכל היבט ושואפת להביט מעבר לתכניות מתוך רצון ליצור איכות חיים גבוהה לאורך שנים רבות.
+photos:
+  -
+    - Jaffa-1-Hanan-54.jpg
+    - Jaffa-1-Hanan-06.jpg
+    - Jaffa-1-Hanan-42.jpg
+    - Jaffa-1-Hanan-11.jpg
+    - Jaffa-1-Hanan-30.jpg
+    - Jaffa-1-Hanan-21.jpg
+    - Jaffa-1-Hanan-34.jpg
+    - Jaffa-1-Hanan-17.jpg
+    - Jaffa-1-Hanan-47.jpg
+    - Jaffa-1-Hanan-57.jpg
+    - Jaffa-1-Hanan-10.jpg
+    - Jaffa-1-Hanan-32.jpg
+  -
+    - Jaffa-1-Hanan-24.jpg
+    - Jaffa-1-Hanan-41.jpg
+    - Jaffa-1-Hanan-03.jpg
+    - Jaffa-1-Hanan-19.jpg
+    - Jaffa-1-Hanan-49.jpg
+    - Jaffa-1-Hanan-12.jpg
+    - Jaffa-1-Hanan-51.jpg
+    - Jaffa-1-Hanan-25.jpg
+    - Jaffa-1-Hanan-20.jpg
+    - Jaffa-1-Hanan-22.jpg
+    - Jaffa-1-Hanan-58.jpg
+    - Jaffa-1-Hanan-04.jpg
+  -
+    - Jaffa-1-Hanan-01.jpg
+    - Jaffa-1-Hanan-16.jpg
+    - Jaffa-1-Hanan-33.jpg
+    - Jaffa-1-Hanan-09.jpg
+    - Jaffa-1-Hanan-59.jpg
+    - Jaffa-1-Hanan-08.jpg
+    - Jaffa-1-Hanan-18.jpg
+    - Jaffa-1-Hanan-56.jpg
+    - Jaffa-1-Hanan-44.jpg
+    - Jaffa-1-Hanan-48.jpg
+    - Jaffa-1-Hanan-53.jpg
+    - Jaffa-1-Hanan-27.jpg
 index:
   iw:
   en: index_en.html
+
 # Build settings
 markdown: kramdown
-theme: minima
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list

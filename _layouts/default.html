@@ -12,6 +12,7 @@
 
     <link href="https://fonts.googleapis.com/css?family={% if page.lang == 'en' %}{{ 'Merriweather:300,400,700,900' }}{% else %}{{ 'Tinos:400,700&amp;subset=hebrew' }}{% endif %}"
           rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:300,400,700,900" rel="stylesheet">
     <!--<link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">-->
 
     <!-- FullPage start -->
@@ -59,20 +60,20 @@
 </header>
 
 <section class="info">
-    <div class="info__left">
+    <div class="info__left" dir="{{page.direction}}">
         <p class="info__description">{{ site.description[page.lang] }}</p>
     </div>
 
-    <div class="info__right">
+    <div class="info__right" dir="{{page.direction}}">
         <h1 class="info__title">{{ site.fullName[page.lang] }}</h1>
         <span class="info__address">{{ site.address[page.lang] }}</span><br>
         <a href="mailto:{{site.email}}" class="info__email">{{ site.email }}</a><br>
-        <a href="tel:{{site.phone}}" class="info__phone">{{ site.phone }}</a>
+        <a href="tel:{{site.phone[page.lang]}}" class="info__phone">{{ site.phone[page.lang] }}</a>
     </div>
 </section>
 
 <div class="photos">
-    {% for section in site.data.photos %}
+    {% for section in site.photos %}
     <div class="photos__section">
         {% for photoName in section %}
         <div class="photos__slide">
@@ -86,10 +87,14 @@
     {% endfor %}
 </div>
 
-<h1 class="title">{{ site.title }}</h1>
+<div class="title">
+    <h1 class="title__text">{{ site.title }}</h1>
+</div>
 
-<button type="button" class="arrow arrow_left">{% include arrow-left.svg %}</button>
-<button type="button" class="arrow arrow_right">{% include arrow-right.svg %}</button>
+<div class="horizontal-arrows">
+    <button type="button" class="arrow arrow_left">{% include arrow-left.svg %}</button>
+    <button type="button" class="arrow arrow_right">{% include arrow-right.svg %}</button>
+</div>
 <button type="button" class="arrow arrow_down arrow_visible">{% include arrow-down.svg %}</button>
 <button type="button" class="arrow arrow_up">{% include arrow-up.svg %}</button>
 
