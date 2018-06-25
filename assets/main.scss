@@ -153,11 +153,12 @@ body {
   }
 
   &__logo {
+    width: $hamburger-layer-width  + 2 * $hamburger-padding-x;
     transform: translateX(-50px);
   }
 
   &__menu-button {
-    margin-right: -$hamburger-padding-x;
+    transform: translateX($hamburger-padding-x);
 
     .hamburger {
       padding: $hamburger-padding-x;
@@ -196,7 +197,7 @@ body {
   position: fixed;
   left: $photos-margin;
   right: $photos-margin;
-  top: -400px;
+  top: -500px;
   transition: transform 0.5s ease-in-out;
   z-index: 15;
   background-color: #fff;
@@ -207,7 +208,7 @@ body {
   line-height: 1.8;
 
   .is-info-open & {
-    transform: translateY(400px);
+    transform: translateY(500px);
   }
 
   &__left {
