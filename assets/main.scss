@@ -142,6 +142,7 @@ body {
   justify-content: space-between;
   align-items: center;
   display: flex;
+  background: #fff;
 
   &:not(.header-visible &) {
     pointer-events: none;
@@ -152,7 +153,7 @@ body {
   }
 
   &__logo {
-    margin-left: -50px;
+    transform: translateX(-50px);
   }
 
   &__menu-button {
@@ -162,7 +163,32 @@ body {
       padding: $hamburger-padding-x;
       @extend %reset-button;
     }
+  }
 
+  &__language {
+    display: inline-block;
+    text-decoration: none;
+    width: 70px;
+    color: #000;
+
+    &_en {
+      text-align: left;
+      padding-left: 10px;
+      font-family: $englishFont;
+
+      html[lang="iw"] & {
+        color: $main-color;
+      }
+    }
+
+    &_iw {
+      text-align: right;
+      padding-right: 10px;
+
+      html[lang="en"] & {
+        color: $main-color;
+      }
+    }
   }
 }
 
@@ -190,7 +216,7 @@ body {
 
   &__right {
     width: 30%;
-    padding-right: 10%;
+    padding-right: 8%;
   }
 
   &__title {
@@ -230,6 +256,7 @@ body {
   transition: opacity $initial-animation-time;
   background: #fff;
   cursor: pointer;
+  z-index: 5;
   mix-blend-mode: lighten;
 
   .header-visible & {
@@ -250,7 +277,7 @@ body {
 
 .horizontal-arrows {
   position: fixed;
-  z-index: 5;
+  z-index: 4;
   top: $photos-margin;
   bottom: $photos-margin;
   left: 0;
@@ -309,7 +336,7 @@ body {
   &_up,
   &_down {
     position: fixed;
-    z-index: 5;
+    z-index: 6;
     left: 0;
     bottom: 0;
     width: 100%;

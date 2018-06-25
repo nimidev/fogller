@@ -75,7 +75,7 @@ photos:
     - Jaffa-1-Hanan-27.jpg
 index:
   iw:
-  en: index_en.html
+  en: en.html
 
 # Build settings
 markdown: kramdown

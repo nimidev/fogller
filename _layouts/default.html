@@ -10,9 +10,8 @@
     <meta name="description"
           content="{{  site.description[page.lang] | strip_html | normalize_whitespace | truncate: 160 | escape }}">
 
-    <link href="https://fonts.googleapis.com/css?family={% if page.lang == 'en' %}{{ 'Merriweather:300,400,700,900' }}{% else %}{{ 'Tinos:400,700&amp;subset=hebrew' }}{% endif %}"
-          rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Merriweather:300,400,700,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Tinos:400,700&amp;subset=hebrew" rel="stylesheet">
     <!--<link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">-->
 
     <!-- FullPage start -->
@@ -29,13 +28,13 @@
     <link rel="stylesheet" href="{{ '/assets/main.css' | relative_url }}">
 
 
-    <!--
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" href="/assets/favicons/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="/assets/favicons/favicon-16x16.png" sizes="16x16">
-    <link rel="manifest" href="/assets/favicons/manifest.json">
-    <link rel="mask-icon" href="/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
-    -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{{'/assets/favicons/apple-touch-icon.png' | relative_url}}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{'/assets/favicons/favicon-32x32.png' | relative_url}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{'/assets/favicons/favicon-16x16.png' | relative_url}}">
+    <link rel="manifest" href="{{'/assets/favicons/site.webmanifest' | relative_url}}">
+    <link rel="mask-icon" href="{{'/assets/favicons/safari-pinned-tab.svg' | relative_url}}" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
 
     {% if jekyll.environment == 'production' and site.google_analytics %}
     {% include google-analytics.html %}
@@ -48,6 +47,20 @@
 <header class="header">
     <div class="header__logo">
         {% include logo.html %}
+    </div>
+
+    <div class="header__languages">
+        {% if page.lang == 'en' %}
+        <a href="{{ site.index.iw | absolute_url }}" class="header__language header__language_iw">עברים</a>
+        {% else %}
+        <a class="header__language header__language_iw">עברים</a>
+        {% endif %}
+        |
+        {% if page.lang == 'iw' %}
+        <a href="{{ site.index.en | absolute_url }}" class="header__language header__language_en">english</a>
+        {% else %}
+        <a class="header__language header__language_en">english</a>
+        {% endif %}
     </div>
 
     <div class="header__menu-button">

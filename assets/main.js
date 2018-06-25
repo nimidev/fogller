@@ -5,6 +5,7 @@ $(document).ready(function () {
   var $header = $('.header');
   var $hamburger = $header.find('.hamburger');
   var $info = $('.info');
+  var $title = $('.title');
   var $body = $('body');
   var $arrowDown = $('.arrow_down');
   var $arrowUp = $('.arrow_up');
@@ -42,13 +43,7 @@ $(document).ready(function () {
     },
     onLeave: function (index, nextIndex) {
       if (!menuIsShown) {
-        $('.photos').addClass('photos_with-menu');
-        $body.addClass('header-visible');
-        $arrowRight.addClass('arrow_visible');
-
-        setTimeout(function () {
-          menuIsShown = true;
-        }, 1000);
+        initAnimation();
 
         return false;
       }
@@ -75,6 +70,10 @@ $(document).ready(function () {
     }
   });
 
+  $title.on('click', function () {
+    initAnimation();
+  });
+
 
   function manageArrowsVisibility(index, slideIndex) {
     if (slidesAmountBySection.length === index) {
@@ -87,5 +86,15 @@ $(document).ready(function () {
 
     slideIndex === 0 ? $arrowLeft.removeClass('arrow_visible') : $arrowLeft.addClass('arrow_visible');
     slidesAmountBySection[index - 1] === slideIndex + 1 ? $arrowRight.removeClass('arrow_visible') : $arrowRight.addClass('arrow_visible');
+  }
+
+  function initAnimation() {
+    $('.photos').addClass('photos_with-menu');
+    $body.addClass('header-visible');
+    $arrowRight.addClass('arrow_visible');
+
+    setTimeout(function () {
+      menuIsShown = true;
+    }, 1000);
   }
 });
