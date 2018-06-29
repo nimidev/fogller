@@ -9,7 +9,7 @@ $hamburger-layer-height: 2px;
 $hamburger-layer-width: 30px;
 $hamburger-hover-opacity: 1;
 
-@import "hamburgers/hamburgers";
+@import "all";
 
 * {
   box-sizing: border-box;
@@ -73,6 +73,25 @@ body {
     &:after {
       border-width: $photos-margin;
     }
+  }
+}
+
+.loader {
+  position: fixed;
+  transition: opacity .5s;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &_hidden {
+    opacity: 0;
+    pointer-events: none;
   }
 }
 

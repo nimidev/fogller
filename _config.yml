@@ -73,6 +73,11 @@ photos:
     - Jaffa-1-Hanan-48.jpg
     - Jaffa-1-Hanan-53.jpg
     - Jaffa-1-Hanan-27.jpg
+photosSizes:
+  - 2411
+  - 1920
+  - 1366
+  - 960
 index:
   iw:
   en: en.html
