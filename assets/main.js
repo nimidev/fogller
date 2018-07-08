@@ -11,11 +11,12 @@ $(document).ready(function () {
   var $arrowUp = $('.arrow_up');
   var $arrowLeft = $('.arrow_left');
   var $arrowRight = $('.arrow_right');
+  var $photos = $('.photos');
   var slidesAmountBySection = [];
   var currentSlideBySection = [];
   var imagesBySection = [];
 
-   $('.photos__section').each(function (i) {
+  $('.photos__section').each(function (i) {
      slidesAmountBySection[i] = $(this).find('.photos__slide').length;
      currentSlideBySection[i] = 0;
      imagesBySection[i] = $(this).find('.photos__slide img').map(function () {
@@ -25,11 +26,19 @@ $(document).ready(function () {
 
   loadNextImages(1, 0);
 
-  $(window).on('load', function () {
-    $('.loader').addClass('loader_hidden');
-  });
+  var onInitialLoadImagesHandler = (function () {
+    var imagesLoadedCounter = 0;
 
-  $('.photos').fullpage({
+    return function () {
+      imagesLoadedCounter++;
+
+      if (imagesLoadedCounter === 3) {
+        $('.loader').addClass('loader_hidden');
+      }
+    }
+  })();
+
+  $photos.fullpage({
     sectionSelector: '.photos__section',
     slideSelector: '.photos__slide',
     controlArrows: false,
@@ -69,6 +78,25 @@ $(document).ready(function () {
     }
   });
 
+  $body.swipe({
+    swipe: function (event, direction) {
+      var directionHandlers = {
+        up: function () {
+          if (!menuIsShown) {
+            initAnimation();
+          } else {
+            $.fn.fullpage.moveSectionDown();
+          }
+        },
+        down: $.fn.fullpage.moveSectionUp,
+        left: $.fn.fullpage.moveSlideRight,
+        right: $.fn.fullpage.moveSlideLeft
+      };
+
+      directionHandlers[direction]();
+    }
+  });
+
   $hamburger.on('click', function () {
     $hamburger.toggleClass('is-active');
     $body.toggleClass('is-info-open');
@@ -86,7 +114,6 @@ $(document).ready(function () {
   $title.on('click', function () {
     initAnimation();
   });
-
 
   function manageArrowsVisibility(index, slideIndex) {
     if (slidesAmountBySection.length === index) {
@@ -122,6 +149,10 @@ $(document).ready(function () {
     function replaceFakeAttributeOnReal(element) {
       if (element && !element.srcset) {
         element.srcset = element.dataset.srcset;
+
+        element.onload = function () {
+          onInitialLoadImagesHandler();
+        };
       }
     }
   }

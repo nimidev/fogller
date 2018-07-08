@@ -4,7 +4,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{{'/assets/img/favicons/apple-touch-icon.png' | relative_url}}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{'/assets/img/favicons/favicon-32x32.png' | relative_url}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{'/assets/img/favicons/favicon-16x16.png' | relative_url}}">
+    <link rel="manifest" href="{{'/assets/img/favicons/site.webmanifest' | relative_url}}">
+    <link rel="mask-icon" href="{{'/assets/img/favicons/safari-pinned-tab.svg' | relative_url}}" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
 
     <title>{% if page.title %}{{ page.title | escape }}{% else %}{{ site.title | escape }}{% endif %}</title>
     <meta name="description"
@@ -19,32 +27,18 @@
           type="text/css"
           href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.9.7/jquery.fullpage.min.css"
     />
-    <script type="text/javascript"
-            src="https://code.jquery.com/jquery-3.3.1.min.js"
-            defer>
-    </script>
-
-    <script type="text/javascript"
-            src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.9.7/jquery.fullpage.min.js"
-            defer>
-    </script>
+    <script src="https://code.jquery.com/jquery-3.3.1{% if jekyll.environment == 'production' %}.min{% endif %}.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.9.7/jquery.fullpage{% if jekyll.environment == 'production' %}.min{% endif %}.js" defer></script>
     <!-- FullPage end-->
 
     <link rel="stylesheet" href="{{ '/assets/main.css' | relative_url }}">
-
-    <link rel="apple-touch-icon" sizes="180x180" href="{{'/assets/img/favicons/apple-touch-icon.png' | relative_url}}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{'/assets/img/favicons/favicon-32x32.png' | relative_url}}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{'/assets/img/favicons/favicon-16x16.png' | relative_url}}">
-    <link rel="manifest" href="{{'/assets/img/favicons/site.webmanifest' | relative_url}}">
-    <link rel="mask-icon" href="{{'/assets/img/favicons/safari-pinned-tab.svg' | relative_url}}" color="#5bbad5">
-    <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="theme-color" content="#ffffff">
 
     {% if jekyll.environment == 'production' and site.google_analytics %}
     {% include google-analytics.html %}
     {% endif %}
 
-    <script type="text/javascript" src="{{ '/assets/main.js' | relative_url }}" defer></script>
+    <script src="{{ '/assets/jquery.touchSwipe.min.js' | relative_url }}" defer></script>
+    <script src="{{ '/assets/main.js' | relative_url }}" defer></script>
     {% if jekyll.environment != 'production' %}
     <!--<script type="text/javascript" src="{{ '/assets/mobileConsole.js' | relative_url }}"></script>-->
     {% endif %}
