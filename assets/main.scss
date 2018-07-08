@@ -253,8 +253,9 @@ body {
   position: fixed;
   left: $photos-margin - 1;
   right: $photos-margin - 1;
-  top: -1000px;
-  transition: top 0.5s ease-in-out;
+  top: $photos-margin;
+  transform: translateY(-1000px);
+  transition: transform 0.5s ease-in-out;
   z-index: 15;
   background-color: #fff;
   justify-content: space-between;
@@ -262,11 +263,10 @@ body {
   font-weight: 300;
   padding: 20px;
   line-height: 1.8;
-  overflow: scroll;
-  will-change: top;
+  overflow: auto;
 
   .is-info-open & {
-    top: $photos-margin;
+    transform: translateY(0);
   }
 
   &__left {

@@ -19,14 +19,18 @@
           type="text/css"
           href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.9.7/jquery.fullpage.min.css"
     />
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script type="text/javascript"
-            src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.9.7/jquery.fullpage.min.js">
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            defer>
+    </script>
+
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.9.7/jquery.fullpage.min.js"
+            defer>
     </script>
     <!-- FullPage end-->
 
     <link rel="stylesheet" href="{{ '/assets/main.css' | relative_url }}">
-
 
     <link rel="apple-touch-icon" sizes="180x180" href="{{'/assets/img/favicons/apple-touch-icon.png' | relative_url}}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{'/assets/img/favicons/favicon-32x32.png' | relative_url}}">
@@ -40,7 +44,10 @@
     {% include google-analytics.html %}
     {% endif %}
 
-    <script type="text/javascript" src="{{ '/assets/main.js' | relative_url }}"></script>
+    <script type="text/javascript" src="{{ '/assets/main.js' | relative_url }}" defer></script>
+    {% if jekyll.environment != 'production' %}
+    <!--<script type="text/javascript" src="{{ '/assets/mobileConsole.js' | relative_url }}"></script>-->
+    {% endif %}
 </head>
 
 <body>
@@ -64,7 +71,7 @@
     </div>
 
     <div class="header__menu-button">
-        <button class="hamburger hamburger--collapse" type="button">
+        <button class="hamburger hamburger--collapse" type="button" aria-label="toggle-menu">
               <span class="hamburger-box">
                 <span class="hamburger-inner"></span>
               </span>
@@ -95,7 +102,8 @@
                   {% for photoSize in site.photosSizes %}
                      {{ photoName | prepend: '/' | prepend: photoSize | prepend: 'assets/img/photos/' | relative_url }} {{photoSize}}w,
                   {% endfor %}
-                 " class="photos__image"/>
+                 " class="photos__image"
+                     alt="{{photoName}}"/>
             </div>
         </div>
         {% endfor %}
@@ -112,11 +120,14 @@
 </div>
 
 <div class="horizontal-arrows">
-    <button type="button" class="arrow arrow_left">{% include arrow-left.svg %}</button>
-    <button type="button" class="arrow arrow_right">{% include arrow-right.svg %}</button>
+    <button type="button" class="arrow arrow_left" aria-label="next-image-slide">{% include arrow-left.svg %}</button>
+    <button type="button" class="arrow arrow_right" aria-label="previous-image-slide">{% include arrow-right.svg %}
+    </button>
 </div>
-<button type="button" class="arrow arrow_down arrow_visible">{% include arrow-down.svg %}</button>
-<button type="button" class="arrow arrow_up">{% include arrow-up.svg %}</button>
+<button type="button" class="arrow arrow_down arrow_visible" aria-label="next-images-section">{% include arrow-down.svg
+    %}
+</button>
+<button type="button" class="arrow arrow_up" aria-label="previous-images-section">{% include arrow-up.svg %}</button>
 
 </body>
 
