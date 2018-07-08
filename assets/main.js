@@ -93,7 +93,9 @@ $(document).ready(function () {
         right: $.fn.fullpage.moveSlideLeft
       };
 
-      directionHandlers[direction]();
+      if (!$body.hasClass('is-info-open')) {
+        directionHandlers[direction]();
+      }
     }
   });
 
