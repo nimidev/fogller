@@ -276,12 +276,20 @@ body {
   &__right {
     flex-basis: 30%;
     padding-right: 8%;
+
+    html[lang="iw"] & {
+      padding-right: 0;
+    }
   }
 
   &__title {
     font-weight: 300;
     color: $main-color;
-    margin: 20px 0 35px;
+    margin: 0;
+  }
+
+  &__description {
+    margin: 0;
   }
 
   &__address,
@@ -305,28 +313,32 @@ body {
     left: $photos-margin-mobile - 1;
     right: $photos-margin-mobile - 1;
     max-height: calc(100% - #{$photos-margin-mobile} - #{$photos-margin});
-    flex-direction: column-reverse;
+    flex-direction: column;
     padding: 0;
     font-size: 14px;
     height: 500px;
 
     &__left {
-      flex: 0 0 0;
+      flex: 1 0 0;
       margin: 30px 0;
     }
 
     &__right {
-      flex: 1 0 0;
+      flex: 0 0 0;
       padding-right: 0;
       margin: 30px 0;
     }
+  }
+}
 
-    &__title {
-      margin: 0;
-    }
+.header__languages {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s;
 
-    &__description {
-    }
+  .is-info-open & {
+    opacity: 1;
+    pointer-events: visible;
   }
 }
 

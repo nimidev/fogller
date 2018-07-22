@@ -31,7 +31,7 @@ description:
   iw: >-
     את ההקפדה על הפרטים והעיצוב ניתן לראות בכל יוזמה של פוגלר החזקות בין אם זה בניין בוטיק או רובע עירוני שלם.
     השאיפה להוביל דרך סטנדרטים גבוהים היא בבסיס התפיסה המקצועית של חברה
-    <br><br>
+    <br>
     אסטרטגיית החברה ברורה בכל היבט ושואפת להביט מעבר לתכניות מתוך רצון ליצור איכות חיים גבוהה לאורך שנים רבות.
 photos:
   -
@@ -50,7 +50,7 @@ photos:
   -
     - Jaffa-1-Hanan-24.jpg
     - Jaffa-1-Hanan-41.jpg
-    - Jaffa-1-Hanan-03.jpg
+    - Jaffa-1-Hanan-03-new.jpg
     - Jaffa-1-Hanan-19.jpg
     - Jaffa-1-Hanan-49.jpg
     - Jaffa-1-Hanan-12.jpg
@@ -79,7 +79,7 @@ photosSizes:
   - 1366
   - 960
 index:
-  iw:
+  iw: ''
   en: en.html
 
 # Build settings
