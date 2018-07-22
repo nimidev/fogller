@@ -13,8 +13,10 @@ $(document).ready(function () {
   var $arrowRight = $('.arrow_right');
   var $photos = $('.photos');
   var slidesAmountBySection = [];
+  var currentSectionIndex;
   var currentSlideBySection = [];
   var imagesBySection = [];
+  var initAimationInProgress = false;
 
   $('.photos__section').each(function (i) {
      slidesAmountBySection[i] = $(this).find('.photos__slide').length;
@@ -44,6 +46,7 @@ $(document).ready(function () {
     controlArrows: false,
     loopHorizontal: false,
     lazyLoading: false,
+    loopTop: true,
     afterRender: function () {
       $arrowDown.on('click', function () {
         $.fn.fullpage.moveSectionDown();
@@ -62,14 +65,25 @@ $(document).ready(function () {
       });
     },
     onLeave: function (index, nextIndex) {
-      if (!menuIsShown) {
-        initAnimation();
-
+      if (initAimationInProgress) {
         return false;
-      }
+      } else {
+        if (!menuIsShown) {
+          initAnimation();
 
-      manageArrowsVisibility(nextIndex, currentSlideBySection[nextIndex - 1]);
-      loadNextImages(nextIndex, currentSlideBySection[nextIndex - 1]);
+          return false;
+        }
+
+        if (index === 1 && nextIndex === slidesAmountBySection.length && menuIsShown) {
+          restoreFullScreen();
+
+          return false;
+        }
+
+        currentSectionIndex = nextIndex;
+        manageArrowsVisibility(nextIndex, currentSlideBySection[nextIndex - 1]);
+        loadNextImages(nextIndex, currentSlideBySection[nextIndex - 1]);
+      }
     },
     onSlideLeave: function (anchorLink, index, slideIndex, direction, nextSlideIndex) {
       currentSlideBySection[index - 1] = nextSlideIndex;
@@ -82,13 +96,23 @@ $(document).ready(function () {
     swipe: function (event, direction) {
       var directionHandlers = {
         up: function () {
-          if (!menuIsShown) {
-            initAnimation();
-          } else {
-            $.fn.fullpage.moveSectionDown();
+          if (!initAimationInProgress) {
+            if (!menuIsShown) {
+              initAnimation();
+            } else {
+              $.fn.fullpage.moveSectionDown();
+            }
           }
         },
-        down: $.fn.fullpage.moveSectionUp,
+        down: function () {
+          if (!initAimationInProgress) {
+            if (currentSectionIndex === 1 && menuIsShown) {
+              restoreFullScreen();
+            } else {
+              $.fn.fullpage.moveSectionUp();
+            }
+          }
+        },
         left: $.fn.fullpage.moveSlideRight,
         right: $.fn.fullpage.moveSlideLeft
       };
@@ -135,8 +159,24 @@ $(document).ready(function () {
     $body.addClass('header-visible');
     $arrowRight.addClass('arrow_visible');
 
+    initAimationInProgress = true;
+
     setTimeout(function () {
+      initAimationInProgress = false;
       menuIsShown = true;
+    }, 1000);
+  }
+
+  function restoreFullScreen() {
+    $('.photos').removeClass('photos_with-menu');
+    $body.removeClass('header-visible');
+    $arrowRight.removeClass('arrow_visible');
+
+    initAimationInProgress = true;
+
+    setTimeout(function () {
+      initAimationInProgress = false;
+      menuIsShown = false;
     }, 1000);
   }
 
