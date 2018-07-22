@@ -73,6 +73,7 @@ photos:
     - Jaffa-1-Hanan-48.jpg
     - Jaffa-1-Hanan-53.jpg
     - Jaffa-1-Hanan-27.jpg
+# !!! don't forget change values of photosSizes in preparing images bash script !!!
 photosSizes:
   - 2411
   - 1920
