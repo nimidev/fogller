@@ -14,9 +14,9 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
 
-    <title>{% if page.title %}{{ page.title | escape }}{% else %}{{ site.title | escape }}{% endif %}</title>
+    <title>{{ site.title[page.lang] }}</title>
     <meta name="description"
-          content="{{  site.description[page.lang] | strip_html | normalize_whitespace | truncate: 160 | escape }}">
+          content="{{ site.description[page.lang] | strip_html | normalize_whitespace | truncate: 160 | escape }}">
 
     <link href="https://fonts.googleapis.com/css?family=Merriweather:300,400,700,900" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Tinos:400,700&amp;subset=hebrew" rel="stylesheet">
@@ -107,7 +107,7 @@
 </div>
 
 <div class="title">
-    <h1 class="title__text">{{ site.title }}</h1>
+    <h1 class="title__text">{{ site.title[page.lang] }}</h1>
 </div>
 
 <div class="loader">
