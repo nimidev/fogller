@@ -15,10 +15,7 @@
 # in the templates via {{ site.myvariable }}.
 title:
   en: Fogller Holdings
-  is: פוגלר אחזקות
-fullName:
-  en: Fogller Holdings
-  iw: פוגלר החזקות
+  iw: פוגלר אחזקות
 address:
   en: Hasadnaot 4, Herzliya
   iw: הסדנאות 4, הרצליה
