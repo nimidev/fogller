@@ -6,13 +6,18 @@ projectPath=$(dirname ${scriptsPath})
 baseImagesPath="${projectPath}/assets/img/photos/"
 originalImages=${baseImagesPath}original/*.jpg
 
-echo "$originalImages"
+for size in "${sizes[@]}"
+do
+    rm -rf "$baseImagesPath$size"
+    mkdir "$baseImagesPath$size"
+done
+
 for image in ${originalImages}
 do
     baseName=$(basename "$image")
     echo "Processing ${baseName}..."
     for size in "${sizes[@]}"
     do
-        convert ${image} -resize ${size} -quality 85 "$baseImagesPath$size/$baseName"
+        convert "${image}" -resize ${size} -quality 85 "$baseImagesPath$size/$baseName"
     done
 done
