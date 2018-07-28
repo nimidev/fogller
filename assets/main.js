@@ -44,7 +44,7 @@ $(document).ready(function () {
     sectionSelector: '.photos__section',
     slideSelector: '.photos__slide',
     controlArrows: false,
-    loopHorizontal: false,
+    // loopHorizontal: false,
     lazyLoading: false,
     loopTop: true,
     afterRender: function () {

@@ -52,16 +52,16 @@
     </a>
 
     <div class="header__languages">
-        {% if page.lang == 'en' %}
-        <a href="{{ site.index.iw | absolute_url }}" class="header__language header__language_iw">עב</a>
-        {% else %}
-        <a class="header__language header__language_iw">עב</a>
-        {% endif %}
-        |
         {% if page.lang == 'iw' %}
         <a href="{{ site.index.en | absolute_url }}" class="header__language header__language_en">EN</a>
         {% else %}
         <a class="header__language header__language_en">EN</a>
+        {% endif %}
+        |
+        {% if page.lang == 'en' %}
+        <a href="{{ site.index.iw | absolute_url }}" class="header__language header__language_iw">עב</a>
+        {% else %}
+        <a class="header__language header__language_iw">עב</a>
         {% endif %}
     </div>
 
