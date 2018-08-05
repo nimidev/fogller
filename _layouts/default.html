@@ -48,14 +48,14 @@
 <header class="header">
     <!-- Reload page logo-->
     <a href="" class="header__logo">
-        {% include logo.html %}
+        {% include {{ page.lang | prepend: 'logo_' | append: '.svg' }} %}
     </a>
 
     <div class="header__languages">
         {% if page.lang == 'iw' %}
-        <a href="{{ site.index.en | absolute_url }}" class="header__language header__language_en">EN</a>
+        <a href="{{ site.index.en | absolute_url }}" class="header__language header__language_en">en</a>
         {% else %}
-        <a class="header__language header__language_en">EN</a>
+        <a class="header__language header__language_en">en</a>
         {% endif %}
         |
         {% if page.lang == 'en' %}

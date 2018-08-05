@@ -215,7 +215,7 @@ body {
   &__language {
     display: inline-block;
     text-decoration: none;
-    width: 70px;
+    width: 40px;
     color: #000;
 
     &_en {
@@ -284,6 +284,7 @@ body {
 
   &__title {
     font-weight: 300;
+    font-size: 31px;
     color: $main-color;
     margin: 0;
   }
