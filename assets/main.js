@@ -1,139 +1,107 @@
 'use strict';
 
 $(document).ready(function () {
-  var menuIsShown = false;
+  var $body = $('body');
+  var $title = $('.title');
+
   var $header = $('.header');
   var $hamburger = $header.find('.hamburger');
-  var $info = $('.info');
-  var $title = $('.title');
-  var $body = $('body');
+  var $info = $header.find('.info');
+
   var $arrowDown = $('.arrow_down');
   var $arrowUp = $('.arrow_up');
   var $arrowLeft = $('.arrow_left');
   var $arrowRight = $('.arrow_right');
+
   var $photos = $('.photos');
-  var slidesAmountBySection = [];
-  var currentSectionIndex;
-  var currentSlideBySection = [];
-  var imagesBySection = [];
-  var initAimationInProgress = false;
+  var $photosSections = $('.photos__section');
+  var $sliderContainers = $('.photos__slider-wrapper');
 
-  $('.photos__section').each(function (i) {
-     slidesAmountBySection[i] = $(this).find('.photos__slide').length;
-     currentSlideBySection[i] = 0;
-     imagesBySection[i] = $(this).find('.photos__slide img').map(function () {
-       return this;
-     });
-   });
+  var state = {};
 
-  loadNextImages(1, 0);
-
-  var onInitialLoadImagesHandler = (function () {
-    var imagesLoadedCounter = 0;
-
-    return function () {
-      imagesLoadedCounter++;
-
-      if (imagesLoadedCounter === 3) {
-        $('.loader').addClass('loader_hidden');
-      }
-    }
-  })();
+  var initialState = {
+    fullScreenAnimationInProgress: false,
+    fullScreenMode: true,
+    isMenuOpened: false,
+    currentSectionIndex: 0,
+    sectionsAmount: $photosSections.length,
+    imagesAmountBySection: $photosSections.map(function (i, photosSection) {
+      return $(photosSection).find('.photos__image').length;
+    }),
+    currentSlideBySection: $photosSections.map(function () {
+      return 0;
+    })
+  };
 
   $photos.fullpage({
     sectionSelector: '.photos__section',
-    slideSelector: '.photos__slide',
     controlArrows: false,
-    // loopHorizontal: false,
-    lazyLoading: false,
+    lazyLoading: false, // implementing own lazy-loading
     loopTop: true,
     afterRender: function () {
-      $arrowDown.on('click', function () {
-        $.fn.fullpage.moveSectionDown();
-      });
-
-      $arrowUp.on('click', function () {
-        $.fn.fullpage.moveSectionUp();
-      });
-
-      $arrowLeft.on('click', function () {
-        $.fn.fullpage.moveSlideLeft();
-      });
-
-      $arrowRight.on('click', function () {
-        $.fn.fullpage.moveSlideRight();
-      });
+      updateState(initialState);
     },
     onLeave: function (index, nextIndex) {
-      if (initAimationInProgress) {
+      if (state.fullScreenMode) {
+        initAnimation();
         return false;
-      } else {
-        if (!menuIsShown) {
-          initAnimation();
-
-          return false;
-        }
-
-        if (index === 1 && nextIndex === slidesAmountBySection.length && menuIsShown) {
+      } else if (state.fullScreenAnimationInProgress || state.isMenuOpened) {
+        return false;
+      } else if (index === 1 && nextIndex === $photosSections.length) {
           restoreFullScreen();
-
           return false;
-        }
-
-        currentSectionIndex = nextIndex;
-        manageArrowsVisibility(nextIndex, currentSlideBySection[nextIndex - 1]);
-        loadNextImages(nextIndex, currentSlideBySection[nextIndex - 1]);
-      }
-    },
-    onSlideLeave: function (anchorLink, index, slideIndex, direction, nextSlideIndex) {
-      currentSlideBySection[index - 1] = nextSlideIndex;
-      manageArrowsVisibility(index, nextSlideIndex);
-      loadNextImages(index, nextSlideIndex);
-    }
-  });
-
-  $body.swipe({
-    swipe: function (event, direction) {
-      var directionHandlers = {
-        up: function () {
-          if (!initAimationInProgress) {
-            if (!menuIsShown) {
-              initAnimation();
-            } else {
-              $.fn.fullpage.moveSectionDown();
-            }
-          }
-        },
-        down: function () {
-          if (!initAimationInProgress) {
-            if (currentSectionIndex === 1 && menuIsShown) {
-              restoreFullScreen();
-            } else {
-              $.fn.fullpage.moveSectionUp();
-            }
-          }
-        },
-        left: $.fn.fullpage.moveSlideRight,
-        right: $.fn.fullpage.moveSlideLeft
-      };
-
-      if (!$body.hasClass('is-info-open')) {
-        directionHandlers[direction]();
+      } else {
+        updateState({
+          currentSectionIndex: nextIndex - 1
+        });
       }
     }
   });
+
+  // $body.swipe({
+  //   swipe: function (event, direction) {
+  //     var directionHandlers = {
+  //       up: function () {
+  //         if (!initAnimationInProgress) {
+  //           if (!menuIsShown) {
+  //             initAnimation();
+  //           } else {
+  //             $.fn.fullpage.moveSectionDown();
+  //           }
+  //         }
+  //       },
+  //       down: function () {
+  //         if (!initAnimationInProgress) {
+  //           if (currentSectionIndex === 1 && menuIsShown) {
+  //             restoreFullScreen();
+  //           } else {
+  //             $.fn.fullpage.moveSectionUp();
+  //           }
+  //         }
+  //       },
+  //       left: $.fn.fullpage.moveSlideRight,
+  //       right: $.fn.fullpage.moveSlideLeft
+  //     };
+  //
+  //     if (!$body.hasClass('is-info-open')) {
+  //       directionHandlers[direction]();
+  //     }
+  //   }
+  // });
 
   $hamburger.on('click', function () {
-    $hamburger.toggleClass('is-active');
-    $body.toggleClass('is-info-open');
+    updateState({
+      isMenuOpened: !state.isMenuOpened
+    });
   });
 
   $body.on('click', function (e) {
     var $target = $(e.target);
 
     if ($target.closest($hamburger).length === 0 && $target.closest($info).length === 0) {
-      $body.removeClass('is-info-open');
-      $hamburger.removeClass('is-active');
+      updateState({
+        isMenuOpened: false
+      })
     }
   });
 
@@ -141,61 +109,130 @@ $(document).ready(function () {
     initAnimation();
   });
 
-  function manageArrowsVisibility(index, slideIndex) {
-    if (slidesAmountBySection.length === index) {
-      $arrowDown.removeClass('arrow_visible');
-      $arrowUp.addClass('arrow_visible');
-    } else {
-      $arrowDown.addClass('arrow_visible');
-      $arrowUp.removeClass('arrow_visible');
-    }
+  $sliderContainers.slick({
+    arrows: false
+  });
 
-    slideIndex === 0 ? $arrowLeft.removeClass('arrow_visible') : $arrowLeft.addClass('arrow_visible');
-    slidesAmountBySection[index - 1] === slideIndex + 1 ? $arrowRight.removeClass('arrow_visible') : $arrowRight.addClass('arrow_visible');
+  $sliderContainers.each(function (i, sliderContainer) {
+    $(sliderContainer).on('beforeChange', function (event, slick, currentSlide, nextSlide) {
+      var newCurrentSlideBySection = state.currentSlideBySection;
+
+      newCurrentSlideBySection[i] = nextSlide;
+
+      updateState({
+        currentSlideBySection: newCurrentSlideBySection
+      });
+    });
+  });
+
+  $arrowDown.on('click', function () {
+    $.fn.fullpage.moveSectionDown();
+  });
+
+  $arrowUp.on('click', function () {
+    $.fn.fullpage.moveSectionUp();
+  });
+
+  $arrowLeft.on('click', function () {
+    $sliderContainers.eq(state.currentSectionIndex).slick('slickPrev');
+  });
+
+  $arrowRight.on('click', function () {
+    $sliderContainers.eq(state.currentSectionIndex).slick('slickNext');
+  });
+
+  function updateState(newState) {
+    Object.assign(state, newState);
+
+    $body.toggleClass('header-visible', !state.fullScreenMode);
+    $photos.toggleClass('photos_with-menu', !state.fullScreenMode);
+
+    $body.toggleClass('is-info-open', state.isMenuOpened);
+    $hamburger.toggleClass('is-active', state.isMenuOpened);
+
+    $arrowDown.toggleClass('arrow_visible', state.sectionsAmount - 1 !== state.currentSectionIndex);
+    $arrowUp.toggleClass('arrow_visible', state.sectionsAmount - 1 === state.currentSectionIndex);
+    $arrowLeft.toggleClass('arrow_visible', !state.fullScreenMode);
+    $arrowRight.toggleClass('arrow_visible', !state.fullScreenMode);
+
+    loadNextImages();
   }
 
   function initAnimation() {
-    $('.photos').addClass('photos_with-menu');
-    $body.addClass('header-visible');
-    $arrowRight.addClass('arrow_visible');
+    updateState({
+      fullScreenMode: false,
+      fullScreenAnimationInProgress: true
+    });
 
-    initAimationInProgress = true;
-
-    setTimeout(function () {
-      initAimationInProgress = false;
-      menuIsShown = true;
-    }, 1000);
+    waitForFullScreenAnimationFinishes();
   }
 
   function restoreFullScreen() {
-    $('.photos').removeClass('photos_with-menu');
-    $body.removeClass('header-visible');
-    $arrowRight.removeClass('arrow_visible');
+    updateState({
+      fullScreenMode: true,
+      fullScreenAnimationInProgress: true
+    });
 
-    initAimationInProgress = true;
+    waitForFullScreenAnimationFinishes();
+  }
 
+  function waitForFullScreenAnimationFinishes() {
     setTimeout(function () {
-      initAimationInProgress = false;
-      menuIsShown = false;
+      updateState({
+        fullScreenAnimationInProgress: false
+      });
     }, 1000);
   }
 
-  function loadNextImages(sectionIndex, slideIndex) {
-    replaceFakeAttributeOnReal(imagesBySection[sectionIndex - 1][slideIndex]);
-    replaceFakeAttributeOnReal(imagesBySection[sectionIndex - 1][slideIndex + 1]);
+  function loadNextImages() {
+    var closestVisibleImages = [];
 
-    if (imagesBySection[sectionIndex]) {
-      replaceFakeAttributeOnReal(imagesBySection[sectionIndex][0]);
-    }
+    var currentSlideIndex = state.currentSlideBySection[state.currentSectionIndex];
+    var maxSlideInSectionIndex = state.imagesAmountBySection[state.currentSectionIndex] - 1;
 
-    function replaceFakeAttributeOnReal(element) {
-      if (element && !element.srcset) {
-        element.srcset = element.dataset.srcset;
+    addClosestVisibleImages(state.currentSectionIndex, currentSlideIndex);
+    addClosestVisibleImages(state.currentSectionIndex, currentSlideIndex === 0 ? maxSlideInSectionIndex : currentSlideIndex - 1);
+    addClosestVisibleImages(state.currentSectionIndex, currentSlideIndex + 1);
+    addClosestVisibleImages(state.currentSectionIndex + 1, 0);
 
-        element.onload = function () {
-          onInitialLoadImagesHandler();
-        };
+    closestVisibleImages.forEach(function ($closestVisibleImage) {
+      replaceFakeAttributeOnReal($closestVisibleImage);
+    });
+
+    function addClosestVisibleImages(sectionIndex, slideIndex) {
+      var $currentSection = $photosSections.eq(sectionIndex);
+
+      if ($currentSection.length) {
+        var visibleImage = $currentSection.find('.photos__image').filter(function (i, imageElement) {
+          return imageElement.dataset.index === slideIndex.toString();
+        });
+
+        if (visibleImage) {
+          closestVisibleImages.push(visibleImage);
+        }
       }
     }
+
+    function replaceFakeAttributeOnReal($element) {
+      if ($element && !$element.attr('srcset')) {
+        $element.attr('srcset', $element.data('srcset'));
+
+        $element.one('load', function () {
+          onInitialLoadImagesHandler();
+        });
+      }
+    }
+
+    var onInitialLoadImagesHandler = (function () {
+      var imagesLoadedCounter = 0;
+
+      return function () {
+        imagesLoadedCounter++;
+
+        if (imagesLoadedCounter === 4) {
+          $('.loader').addClass('loader_hidden');
+        }
+      }
+    })();
   }
 });

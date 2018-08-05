@@ -35,6 +35,8 @@
     {% include google-analytics.html %}
     {% endif %}
 
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick.css"/>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.0/slick/slick.min.js" defer></script>
     <script src="{{ '/assets/jquery.touchSwipe.min.js' | relative_url }}" defer></script>
     <script src="{{ '/assets/main.js' | relative_url }}" defer></script>
     {% if jekyll.environment != 'production' %}
@@ -43,6 +45,11 @@
 </head>
 
 <body>
+
+<div class="loader">
+    {% include loader.html %}
+</div>
+
 <header class="header">
     <!-- Reload page logo-->
     <a href="" class="header__logo">
@@ -88,18 +95,18 @@
 <div class="photos">
     {% for section in site.photos %}
     <div class="photos__section">
-        {% for photoName in section %}
-        <div class="photos__slide">
-            <div class="photos__image-wrapper">
-                <img data-srcset="
-                  {% for photoSize in site.photosSizes %}
-                     {{ photoName | prepend: '/' | prepend: photoSize | prepend: 'assets/img/photos/' | relative_url }} {{photoSize}}w,
-                  {% endfor %}
-                 " class="photos__image"
-                     alt="{{photoName}}"/>
+        <div class="photos__slider-wrapper">
+            {% for photoName in section %}
+            <div class="photos__slide">
+                <div class="photos__image-wrapper">
+                    <img data-srcset="{% for photoSize in site.photosSizes %}{{ photoName | prepend: '/' | prepend: photoSize | prepend: 'assets/img/photos/' | relative_url }} {{photoSize}}w,{% endfor %}"
+                         class="photos__image"
+                         data-index="{{ forloop.index | minus: 1 }}"
+                         alt="{{photoName}}"/>
+                </div>
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
     {% endfor %}
 </div>
@@ -108,20 +115,23 @@
     <h1 class="title__text">{{ site.title[page.lang] }}</h1>
 </div>
 
-<div class="loader">
-    {% include loader.html %}
-</div>
-
 <div class="horizontal-arrows">
-    <button type="button" class="arrow arrow_left" aria-label="next-image-slide">{% include arrow-left.svg %}</button>
-    <button type="button" class="arrow arrow_right" aria-label="previous-image-slide">{% include arrow-right.svg %}
+    <button type="button" class="arrow arrow_left" aria-label="next-image-slide">
+        {% include arrow-left.svg %}
+    </button>
+
+    <button type="button" class="arrow arrow_right" aria-label="previous-image-slide">
+        {% include arrow-right.svg %}
     </button>
 </div>
-<button type="button" class="arrow arrow_down arrow_visible" aria-label="next-images-section">{% include arrow-down.svg
-    %}
+
+<button type="button" class="arrow arrow_down arrow_visible" aria-label="next-images-section">
+    {% include arrow-down.svg %}
 </button>
-<button type="button" class="arrow arrow_up" aria-label="previous-images-section">{% include arrow-up.svg %}</button>
+
+<button type="button" class="arrow arrow_up" aria-label="previous-images-section">
+    {% include arrow-up.svg %}
+</button>
 
 </body>
-
 </html>

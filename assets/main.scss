@@ -505,3 +505,9 @@ body {
     transform: translateY(-15px);
   }
 }
+
+.photos__slider-wrapper,
+.slick-list,
+.slick-track {
+  height: 100%;
+}
