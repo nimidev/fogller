@@ -66,13 +66,13 @@
         {% if page.lang == 'iw' %}
         <a href="{{ site.index.en | absolute_url }}" class="header__language header__language_en">en</a>
         {% else %}
-        <a class="header__language header__language_en">en</a>
+        <span class="header__language header__language_en">en</span>
         {% endif %}
         |
         {% if page.lang == 'en' %}
         <a href="{{ site.index.iw | absolute_url }}" class="header__language header__language_iw">עב</a>
         {% else %}
-        <a class="header__language header__language_iw">עב</a>
+        <span class="header__language header__language_iw">עב</span>
         {% endif %}
     </div>
 

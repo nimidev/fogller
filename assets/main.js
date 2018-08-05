@@ -6,7 +6,7 @@ $(document).ready(function () {
 
   var $header = $('.header');
   var $hamburger = $header.find('.hamburger');
-  var $info = $header.find('.info');
+  var $info = $('.info');
 
   var $arrowDown = $('.arrow_down');
   var $arrowUp = $('.arrow_up');
@@ -82,7 +82,7 @@ $(document).ready(function () {
   $body.on('click', function (e) {
     var $target = $(e.target);
 
-    if ($target.closest($hamburger).length === 0 && $target.closest($info).length === 0) {
+    if ($target.closest($header).length === 0 && $target.closest($info).length === 0) {
       updateState({
         isMenuOpened: false
       })
