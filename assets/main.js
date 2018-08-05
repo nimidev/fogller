@@ -58,36 +58,20 @@ $(document).ready(function () {
     }
   });
 
-  // $body.swipe({
-  //   swipe: function (event, direction) {
-  //     var directionHandlers = {
-  //       up: function () {
-  //         if (!initAnimationInProgress) {
-  //           if (!menuIsShown) {
-  //             initAnimation();
-  //           } else {
-  //             $.fn.fullpage.moveSectionDown();
-  //           }
-  //         }
-  //       },
-  //       down: function () {
-  //         if (!initAnimationInProgress) {
-  //           if (currentSectionIndex === 1 && menuIsShown) {
-  //             restoreFullScreen();
-  //           } else {
-  //             $.fn.fullpage.moveSectionUp();
-  //           }
-  //         }
-  //       },
-  //       left: $.fn.fullpage.moveSlideRight,
-  //       right: $.fn.fullpage.moveSlideLeft
-  //     };
-  //
-  //     if (!$body.hasClass('is-info-open')) {
-  //       directionHandlers[direction]();
-  //     }
-  //   }
-  // });
+  $body.swipe({
+    swipe: function (event, direction) {
+      var directionHandlers = {
+        up: moveToSectionDown,
+        down: moveToSectionUp,
+        left: moveToNextSlide,
+        right: moveToPreviousSlide
+      };
+
+      if (!state.isMenuOpened) {
+        directionHandlers[direction]();
+      }
+    }
+  });
 
   $hamburger.on('click', function () {
     updateState({
@@ -125,21 +109,26 @@ $(document).ready(function () {
     });
   });
 
-  $arrowDown.on('click', function () {
-    $.fn.fullpage.moveSectionDown();
-  });
+  $arrowDown.on('click', moveToSectionDown);
+  $arrowUp.on('click', moveToSectionUp);
+  $arrowLeft.on('click', moveToPreviousSlide);
+  $arrowRight.on('click', moveToNextSlide);
 
-  $arrowUp.on('click', function () {
-    $.fn.fullpage.moveSectionUp();
-  });
-
-  $arrowLeft.on('click', function () {
-    $sliderContainers.eq(state.currentSectionIndex).slick('slickPrev');
-  });
-
-  $arrowRight.on('click', function () {
+  function moveToNextSlide() {
     $sliderContainers.eq(state.currentSectionIndex).slick('slickNext');
-  });
+  }
+
+  function moveToPreviousSlide() {
+    $sliderContainers.eq(state.currentSectionIndex).slick('slickPrev');
+  }
+
+  function moveToSectionUp() {
+    $.fn.fullpage.moveSectionUp();
+  }
+
+  function moveToSectionDown() {
+    $.fn.fullpage.moveSectionDown();
+  }
 
   function updateState(newState) {
     Object.assign(state, newState);

@@ -196,6 +196,20 @@ body {
     }
   }
 
+  &__logo-image_big {
+    @include phone {
+      display: none;
+    }
+  }
+
+  &__logo-image_small {
+    display: none;
+
+    @include phone {
+      display: initial;
+    }
+  }
+
   &__menu-button {
     transform: translateX($hamburger-padding-x);
 
@@ -390,6 +404,7 @@ body {
   display: flex;
 
   @include phone {
+    pointer-events: none;
     top: $photos-margin-mobile;
     bottom: $photos-margin-mobile;
   }

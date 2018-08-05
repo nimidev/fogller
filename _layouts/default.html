@@ -53,7 +53,13 @@
 <header class="header">
     <!-- Reload page logo-->
     <a href="" class="header__logo">
-        {% include {{ page.lang | prepend: 'logo_' | append: '.svg' }} %}
+        <span class="header__logo-image_big">
+            {% include {{ page.lang | prepend: 'logo_' | append: '.svg' }} %}
+        </span>
+
+        <span class="header__logo-image_small">
+            {% include logo_mobile.svg %}
+        </span>
     </a>
 
     <div class="header__languages">
@@ -88,7 +94,7 @@
         <h1 class="info__title">{{ site.title[page.lang] }}</h1>
         <span class="info__address">{{ site.address[page.lang] }}</span><br>
         <a href="mailto:{{site.email}}" class="info__email">{{ site.email }}</a><br>
-        <a href="tel:{{site.phone[page.lang]}}" class="info__phone">{{ site.phone[page.lang] }}</a>
+        <a href="tel:{{site.phone[page.lang] | remove: ' ' | remove: '-'}}" class="info__phone">{{ site.phone[page.lang] }}</a>
     </div>
 </section>
 
