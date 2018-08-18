@@ -447,14 +447,13 @@ body {
     svg {
       position: absolute;
       top: 50%;
-      height: 20px;
     }
   }
 
   &_left {
     svg {
+      transform: rotate(180deg);
       $width: 40px;
-      width: $width;
       left: $photos-margin - $width + 10px;
 
       @include phone {
@@ -466,7 +465,6 @@ body {
   &_right {
     svg {
       $width: 40px;
-      width: $width;
       right: $photos-margin - $width + 10px;
 
       @include phone {
@@ -489,14 +487,16 @@ body {
     }
 
     svg {
-      width: 20px;
       position: relative;
-      height: 40px;
 
       @include phone {
         bottom: 25px;
       }
     }
+  }
+
+  &_up svg {
+    transform: rotate(-90deg);
   }
 
   &_down {
@@ -505,9 +505,12 @@ body {
     .header-visible & {
       animation: none;
     }
+
+    svg {
+      transform: rotate(90deg);
+    }
   }
 }
-
 
 @keyframes bounce {
   0%, 20%, 50%, 80%, 100% {

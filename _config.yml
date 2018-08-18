@@ -88,6 +88,10 @@ photosSizes:
 index:
   iw: ''
   en: en.html
+  arrow1: arrow-1.html
+  arrow2: arrow-2.html
+  arrow3: arrow-3.html
+  arrow4: arrow-4.html
 
 # Build settings
 markdown: kramdown
