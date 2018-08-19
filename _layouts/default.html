@@ -53,12 +53,14 @@
 <header class="header">
     <!-- Reload page logo-->
     <a href="" class="header__logo">
-        <span class="header__logo-image_big">
-            {% include {{ page.lang | prepend: 'logo_' | append: '.svg' }} %}
+        <span class="header__logo-image">
+            {% include logo_mobile.svg %}
         </span>
 
-        <span class="header__logo-image_small">
-            {% include logo_mobile.svg %}
+        <span class="header__logo-divider"></span>
+
+        <span class="header__logo-text">
+            {% include {{ page.lang | prepend: 'logo-text-' | append: '.svg' }} %}
         </span>
     </a>
 

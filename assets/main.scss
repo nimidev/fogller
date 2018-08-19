@@ -169,6 +169,7 @@ body {
   width: 100%;
   z-index: 20;
   opacity: 0;
+  pointer-events: none;
   transition: opacity $initial-animation-time;
   justify-content: space-between;
   align-items: center;
@@ -179,34 +180,51 @@ body {
     padding: 0 $photos-margin-mobile;
   }
 
-  &:not(.header-visible &) {
-    pointer-events: none;
-  }
-
   .header-visible & {
     opacity: 1;
+    pointer-events: auto;
   }
 
   &__logo {
-    width: $hamburger-layer-width  + 2 * $hamburger-padding-x;
-    transform: translateX(-50px);
+    display: flex;
+    align-items: center;
+    transform: translateX(-55px);
 
     @include phone {
       transform: translateX(0);
     }
   }
 
-  &__logo-image_big {
-    @include phone {
-      display: none;
+  &__logo-image {
+    svg {
+      display: block;
     }
   }
 
-  &__logo-image_small {
-    display: none;
+  &__logo-text {
+    svg {
+      display: block;
+    }
+  }
 
+  &__logo-divider {
+    align-self: stretch;
+    margin: 2px 15px;
+    width: 1px;
+    background-color: #312d2d;
+  }
+
+  &__logo-text,
+  &__logo-divider {
     @include phone {
-      display: initial;
+      pointer-events: visible;
+      opacity: 1;
+      transition: opacity .3s;
+
+      .is-info-open & {
+        opacity: 0;
+        pointer-events: none;
+      }
     }
   }
 
@@ -338,12 +356,17 @@ body {
 }
 
 .header__languages {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px;
   opacity: 0;
   pointer-events: none;
-  transition: opacity .3s;
 
   .is-info-open & {
     opacity: 1;
+    transition: opacity 1s .3s;
     pointer-events: visible;
   }
 }
