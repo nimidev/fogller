@@ -125,20 +125,20 @@
 
 <div class="horizontal-arrows">
     <button type="button" class="arrow arrow_left" aria-label="next-image-slide">
-        {% include {{ page.arrow | default: 0 | prepend: 'arrows/arrow-' | append: '.svg' }} %}
+        {% include arrow.svg %}
     </button>
 
     <button type="button" class="arrow arrow_right" aria-label="previous-image-slide">
-        {% include {{ page.arrow | default: 0 | prepend: 'arrows/arrow-' | append: '.svg' }} %}
+        {% include arrow.svg %}
     </button>
 </div>
 
 <button type="button" class="arrow arrow_down arrow_visible" aria-label="next-images-section">
-    {% include {{ page.arrow | default: 0 | prepend: 'arrows/arrow-' | append: '.svg' }} %}
+    {% include arrow.svg %}
 </button>
 
 <button type="button" class="arrow arrow_up" aria-label="previous-images-section">
-    {% include {{ page.arrow | default: 0 | prepend: 'arrows/arrow-' | append: '.svg' }} %}
+    {% include arrow.svg %}
 </button>
 
 </body>

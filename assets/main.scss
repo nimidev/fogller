@@ -442,6 +442,11 @@ body {
 
   svg {
     fill: $main-color;
+    width: 50px;
+
+    @include phone {
+      width: 40px;
+    }
   }
 
   &_visible {
